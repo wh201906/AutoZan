@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">QQ自动点赞</string>
+    <string name="description">该服务用以保证QQ自动点赞应用的正常运行，关闭后将无法执行QQ自动点赞操作。</string>
+</resources>

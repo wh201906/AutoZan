@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/Tutorial_BlankView"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:id="@+id/Tutorial_TittleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="教程"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Tutorial_StepsView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="一、基本操作" />
+
+            <TextView
+                android:id="@+id/Tutorial_StepsView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Step1:\n\u3000\u3000打开系统设置→辅助功能(无障碍)菜单，将“QQ自动点赞”的辅助服务开关打开\n(也可直接点击应用主界面上的“进入辅助功能/无障碍设置界面”按钮进入)" />
+
+            <ImageView
+                android:id="@+id/Tutorial_StepsIView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/step1" />
+
+            <TextView
+                android:id="@+id/Tutorial_StepsView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:text="(进入辅助功能/无障碍设置界面)" />
+
+            <ImageView
+                android:id="@+id/Tutorial_StepsIView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/step2" />
+
+            <TextView
+                android:id="@+id/Tutorial_StepsView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:text="(打开“QQ自动点赞”的辅助服务)" />
+
+            <TextView
+                android:id="@+id/Tutorial_StepsView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Step2:\n\u3000\u3000进入QQ，打开个人面板中的点赞窗口" />
+
+            <ImageView
+                android:id="@+id/Tutorial_StepsIView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/step3" />
+
+            <TextView
+                android:id="@+id/Tutorial_StepsView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Step3:\n\u3000\u3000下拉状态栏，单击开始按钮" />
+
+            <ImageView
+                android:id="@+id/Tutorial_StepsIView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/step4" />
+
+            <TextView
+                android:id="@+id/Tutorial_StepsView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Step4:\n\u3000\u3000收起状态栏，即可自动点赞" />
+
+            <ImageView
+                android:id="@+id/Tutorial_StepsIView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/step5" />
+
+            <TextView
+                android:id="@+id/Tutorial_StepsView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_horizontal"
+                android:text="提示:\n“谁赞过我”和“我赞过谁”均支持\n\n如果需要点赞的用户过多，建议将屏幕关闭时间设长一些\n\n如果发现过程中屏幕没有动静请下拉通知栏，点击停止按钮后过几秒再点击开始按钮。若仍无法正常点赞请重启手机后重复以上全部过程，若还是无法正常点赞请联系作者\n\n"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/Tutorial_StepsView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_horizontal"
+                android:text="觉得软件好用请打赏，谢谢ᶘ ᵒᴥᵒᶅ\n(支持支付宝微信QQ)\n\n"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/Tutorial_StepsView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal"
+                android:text="若有意见建议反馈吐槽请联系作者\n(联系方式见主界面)"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </ScrollView>
