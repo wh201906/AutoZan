@@ -148,16 +148,6 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/Tutorial_StepsView9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:gravity="center_horizontal"
-                android:text="觉得软件好用请打赏，谢谢ᶘ ᵒᴥᵒᶅ\n(支持支付宝微信QQ)\n\n"
-                android:textSize="18sp" />
-
-            <TextView
                 android:id="@+id/Tutorial_StepsView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
