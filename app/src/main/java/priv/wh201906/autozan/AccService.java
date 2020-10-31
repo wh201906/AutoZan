@@ -53,20 +53,8 @@ public class AccService extends AccessibilityService {
                         performClick(targetButtonList);
 
                         app.LogPrintLine("当前页面点赞完成，将滚动到下一页");
-                        //向下滚动一页**********Start
-                        //Log.v("step","向下滚动一页**********Start");
-                        //Log.v("step","子控件数："+String.valueOf(accNodeInfo.getChildCount()));
-                        for (int i = 0; i < accNodeInfo.getChildCount(); i++) {
-                            AccessibilityNodeInfo info = accNodeInfo.getChild(i);
-                            if (info.getClassName().toString().equals("android.widget.AbsListView")) {
-                                if (!isCorrectWindow()) {
-                                    return;
-                                }
-                                info.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
-                                break;
-                            }
-                        }
-                        Log.v("step", "向下滚动一页**********End");
+
+                        scrollDown(accNodeInfo);
 
                         tempNodeInfo1 = accNodeInfo.findAccessibilityNodeInfosByText("显示更多");
                         tempNodeInfo2 = accNodeInfo.findAccessibilityNodeInfosByText("暂无更多");
@@ -124,7 +112,6 @@ public class AccService extends AccessibilityService {
         AServiceReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                //Log.v("test","broadcast received");
                 if ((intent.getAction() != null) && intent.getAction().equals(MyApplication.ACCSERVICE_CHANGE)) {
                     switch (intent.getIntExtra("isRunning", -1)) {
                         case MyApplication.ACCSERVICE_ERROR:
@@ -172,15 +159,7 @@ public class AccService extends AccessibilityService {
                     }
                     break;
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                /*app.LogPrintLine("TYPE_WINDOW_STATE_CHANGED\nPackageName:"+event.getPackageName().toString() + "\nEvent:"+event.toString()+"\nSource:"+event.getSource().toString());
-                app.LogPrintLine("TYPE_WINDOW_STATE_CHANGED\nText:"+event.getSource().getText());
-                List<CharSequence> list1=event.getText();
-                app.LogPrintLine("TYPE_WINDOW_STATE_CHANGED\nAmount:"+String.valueOf(list1.size()));
-                for (CharSequence item:list1) {
-                    if (item!=null) {
-                        app.LogPrintLine("Text:"+item.toString());
-                    }
-                }*/
+
                     if (runningState != MyApplication.RUNNING_INITIALIZED) {
                         tempNodeInfo1 = event.getSource().findAccessibilityNodeInfosByText("设置");
                         tempNodeInfo2 = event.getSource().findAccessibilityNodeInfosByText("赞了");
@@ -231,8 +210,7 @@ public class AccService extends AccessibilityService {
 
             }
         }
-        //tempNodeInfo1=null;
-        //tempNodeInfo2=null;
+
         if (!event.getText().isEmpty()
                 && event.getText().get(0).toString().contains("每天最多给")) {
             Log.i("event", "usual");
@@ -251,19 +229,6 @@ public class AccService extends AccessibilityService {
             AccessibilityNodeInfo temp1 = getRootInActiveWindow();
             if(temp1==null)
                 return;
-            AccessibilityNodeInfo temp2 = temp1.findAccessibilityNodeInfosByText("天学网").size() == 0 ? null : temp1.findAccessibilityNodeInfosByText("天学网").get(0);
-            if (temp2 != null) {
-                Log.i("txw", temp1.getClassName().toString() + "\n"
-                        + String.valueOf(temp1.getChildCount()) + "\n"
-                        + temp1.getViewIdResourceName() + "\n"
-                        + ((temp1.getText() == null) ? "" : temp1.getText().toString()) + "\n"
-                        + temp1.toString() + "\n"
-                        + temp2.getClassName().toString() + "\n"
-                        + String.valueOf(temp2.getChildCount()) + "\n"
-                        + temp2.getViewIdResourceName() + "\n"
-                        + ((temp2.getText() == null) ? "" : temp2.getText().toString()) + "\n"
-                        + temp2.toString());
-            }
 
         }
     }
@@ -291,6 +256,7 @@ public class AccService extends AccessibilityService {
             do {
                 Thread.sleep(1000);
                 info = getRootInActiveWindow();
+                Log.i("RootWindow",info.toString());
                 tempNodeInfo1 = info.findAccessibilityNodeInfosByText("设置");
                 tempNodeInfo2 = info.findAccessibilityNodeInfosByText("赞了");
                 isCorrect = info.getPackageName().toString().equals("com.tencent.mobileqq")
@@ -299,7 +265,7 @@ public class AccService extends AccessibilityService {
                         && !tempNodeInfo2.isEmpty()
                         && !(tempNodeInfo2.size() == 0);
             } while (!isCorrect);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -380,6 +346,19 @@ public class AccService extends AccessibilityService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void scrollDown(AccessibilityNodeInfo parentNode){
+        for (int i = 0; i < parentNode.getChildCount(); i++) {
+            AccessibilityNodeInfo info = parentNode.getChild(i);
+            if (info.getClassName().toString().equals("android.widget.AbsListView")) {
+                if (!isCorrectWindow()) {
+                    return;
+                }
+                info.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
+                break;
+            }
         }
     }
 
