@@ -32,8 +32,8 @@ public class AccService extends AccessibilityService {
         @Override
         public void run() {
 
-            List<AccessibilityNodeInfo> tempNodeInfo1 = null;
-            List<AccessibilityNodeInfo> tempNodeInfo2 = null;
+            List<AccessibilityNodeInfo> showMoreButtonList = null;
+            List<AccessibilityNodeInfo> noMoreButtonList = null;
 
             if (!isCorrectWindow()) {
                 return;
@@ -42,61 +42,30 @@ public class AccService extends AccessibilityService {
             app.initCounter();
             try {
                 do {
-                    do {
-                        if (!isCorrectWindow()) {
-                            return;
-                        }
-                        accNodeInfo = WaitCorrectWindow(); //等待点赞窗口
-                        ArrayList<AccessibilityNodeInfo> targetButtonList = getValidButton(accNodeInfo);
-                        if (targetButtonList.isEmpty())
-                            continue;
-                        performClick(targetButtonList);
-
-                        app.LogPrintLine("当前页面点赞完成，将滚动到下一页");
-
-                        scrollDown(accNodeInfo);
-
-                        tempNodeInfo1 = accNodeInfo.findAccessibilityNodeInfosByText("显示更多");
-                        tempNodeInfo2 = accNodeInfo.findAccessibilityNodeInfosByText("暂无更多");
-                    } while ((tempNodeInfo1 == null
-                            || tempNodeInfo1.isEmpty())
-                            && (tempNodeInfo2 == null
-                            || tempNodeInfo2.isEmpty()));
-
-                    //tempNodeInfo1=null;
-                    //tempNodeInfo2=null;
-
-                    Log.v("step", "循环点击若干页(到“显示更多”)中的每个“赞”**********End");
-                    //循环点击若干页(到“显示更多”)中的每个“赞”**********End
                     if (!isCorrectWindow()) {
                         return;
                     }
+                    accNodeInfo = WaitCorrectWindow(); //等待点赞窗口
+                    ArrayList<AccessibilityNodeInfo> targetButtonList = getValidButton(accNodeInfo);
+                    if (targetButtonList.isEmpty())
+                        continue;
+                    performClick(targetButtonList);
 
-                    if (accNodeInfo.findAccessibilityNodeInfosByText("显示更多").size() == 1) {
-                        //点击“显示更多”并向下滚动一页**********Start
-                        Log.v("step", "点击“显示更多”并向下滚动一页**********Start");
-                        accNodeInfo.findAccessibilityNodeInfosByText("显示更多").get(0).getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                    app.LogPrintLine("当前页面点赞完成，将滚动到下一页");
+
+                    showMoreButtonList = accNodeInfo.findAccessibilityNodeInfosByText("显示更多");
+                    if (showMoreButtonList != null && !showMoreButtonList.isEmpty()) {
+                        showMoreButtonList.get(0).getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
                         Thread.sleep(app.getDelayTime() + 1000);
-                        //点击完成，下滚
                         accNodeInfo = WaitCorrectWindow();
-                        Log.v("step", "已获得窗口");
-                        for (int i = 0; i < accNodeInfo.getChildCount(); i++) {//滚动
-                            AccessibilityNodeInfo info = accNodeInfo.getChild(i);
-                            if (info.getClassName().toString().equals("android.widget.AbsListView")) {
-                                info.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
-                                break;
-                            }
-                        }
-                        //Log.v("step","点击“显示更多”并向下滚动一页**********End");
-                        //点击“显示更多”并向下滚动一页**********Rnd
                     }
 
-                    Log.i("msg", String.valueOf(accNodeInfo.findAccessibilityNodeInfosByText("暂无更多").size()));
-                    tempNodeInfo1 = accNodeInfo.findAccessibilityNodeInfosByText("暂无更多");
-                } while (tempNodeInfo1.isEmpty() || tempNodeInfo1.size() == 0);
-                //tempNodeInfo1=null;
-                Log.v("step", "循环点击所有“赞”**********End");
-                //循环点击所有“赞”**********End
+                    scrollDown(accNodeInfo);
+
+                    noMoreButtonList = accNodeInfo.findAccessibilityNodeInfosByText("暂无更多");
+
+                } while (noMoreButtonList == null || noMoreButtonList.isEmpty());
+
                 app.LogPrintLine("点赞完成，共计为" + String.valueOf(app.getCounter()) + "人点赞");
                 app.initCounter();
             } catch (Exception e) {
@@ -216,18 +185,8 @@ public class AccService extends AccessibilityService {
             Log.i("event", "usual");
         } else {
 
-//            Log.i("event",
-//                    //"PackageName:"+event.getPackageName().toString()+"\n" +
-//                    "Type:" + ((event.getEventType()) == (AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED)
-//                            ? "NOTIFICATION_STATE_CHANGED\n"
-//                            + "PackageName:" + event.getPackageName().toString() + "\n"
-//                            + "\n群主" + String.valueOf(getRootInActiveWindow().findAccessibilityNodeInfosByText("群主"))
-//                            + "\n返回" + String.valueOf(getRootInActiveWindow().findAccessibilityNodeInfosByText("返回"))
-//                            + "\n群聊成员" + String.valueOf(getRootInActiveWindow().findAccessibilityNodeInfosByText("群聊成员"))
-//                            + "\n排序" + String.valueOf(getRootInActiveWindow().findAccessibilityNodeInfosByText("排序"))
-//                            + "\n更多" + String.valueOf(getRootInActiveWindow().findAccessibilityNodeInfosByText("更多")) : ""));
             AccessibilityNodeInfo temp1 = getRootInActiveWindow();
-            if(temp1==null)
+            if (temp1 == null)
                 return;
 
         }
@@ -256,7 +215,7 @@ public class AccService extends AccessibilityService {
             do {
                 Thread.sleep(1000);
                 info = getRootInActiveWindow();
-                Log.i("RootWindow",info.toString());
+                Log.i("RootWindow", info.toString());
                 tempNodeInfo1 = info.findAccessibilityNodeInfosByText("设置");
                 tempNodeInfo2 = info.findAccessibilityNodeInfosByText("赞了");
                 isCorrect = info.getPackageName().toString().equals("com.tencent.mobileqq")
@@ -276,18 +235,6 @@ public class AccService extends AccessibilityService {
         //Log.v("info","赞了:"+String.valueOf(info.findAccessibilityNodeInfosByText("赞了").isEmpty()));
         isWindowChanged = false;
         return info;
-    }
-
-    private void showNodeTree(AccessibilityNodeInfo accessibilityNodeInfo) {
-        if (accessibilityNodeInfo == null)
-            return;
-        Log.v("TAG", "找到了view的文本是:" + accessibilityNodeInfo.getText());
-        Log.v("TAG", "当前应用的包名是:" + accessibilityNodeInfo.getPackageName() + accessibilityNodeInfo.getClassName());
-        if (accessibilityNodeInfo.getChildCount() != 0) {
-            for (int i = 0; i < accessibilityNodeInfo.getChildCount(); i++) {
-                showNodeTree(accessibilityNodeInfo.getChild(i));
-            }
-        }
     }
 
     private boolean isCorrectWindow() {
@@ -349,7 +296,7 @@ public class AccService extends AccessibilityService {
         }
     }
 
-    private void scrollDown(AccessibilityNodeInfo parentNode){
+    private void scrollDown(AccessibilityNodeInfo parentNode) {
         for (int i = 0; i < parentNode.getChildCount(); i++) {
             AccessibilityNodeInfo info = parentNode.getChild(i);
             if (info.getClassName().toString().equals("android.widget.AbsListView")) {
