@@ -120,10 +120,10 @@
                 android:id="@+id/Tutorial_StepsView7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:text="Step4:\n\u3000\u3000收起状态栏，即可自动点赞" />
+                android:layout_marginEnd="20dp"
+                android:text="Step4:\n\u3000\u3000收起状态栏，即可自动点赞\n（若收起状态栏后未开始自动点赞，请尝试返回至个人面板，再进入点赞窗口）" />
 
             <ImageView
                 android:id="@+id/Tutorial_StepsIView5"
@@ -155,7 +155,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center_horizontal"
-                android:text="若有意见建议反馈吐槽请联系作者\n(联系方式见主界面)"
+                android:text="项目链接：https://github.com/wh201906/AutoZan\n求star求issue>_<"
                 android:textSize="18sp" />
 
         </LinearLayout>

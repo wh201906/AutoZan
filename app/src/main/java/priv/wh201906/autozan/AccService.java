@@ -32,12 +32,8 @@ public class AccService extends AccessibilityService {
         @Override
         public void run() {
 
-            List<AccessibilityNodeInfo> showMoreButtonList = null;
             List<AccessibilityNodeInfo> noMoreButtonList = null;
-
-            if (!isCorrectWindow()) {
-                return;
-            }
+            
             app.LogPrintLine("自动点赞已开始");
             app.initCounter();
             try {
@@ -53,9 +49,7 @@ public class AccService extends AccessibilityService {
 
                     app.LogPrintLine("当前页面点赞完成，将滚动到下一页");
 
-                    showMoreButtonList = accNodeInfo.findAccessibilityNodeInfosByText("显示更多");
-                    if (showMoreButtonList != null && !showMoreButtonList.isEmpty()) {
-                        showMoreButtonList.get(0).getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                    if (clickShowMoreButton(accNodeInfo)) {
                         Thread.sleep(app.getDelayTime() + 1000);
                         accNodeInfo = WaitCorrectWindow();
                     }
@@ -308,6 +302,17 @@ public class AccService extends AccessibilityService {
             }
         }
     }
+
+    private boolean clickShowMoreButton(AccessibilityNodeInfo parentNode) {
+
+        List<AccessibilityNodeInfo> showMoreButtonList = accNodeInfo.findAccessibilityNodeInfosByText("显示更多");
+        if (showMoreButtonList != null && !showMoreButtonList.isEmpty()) {
+            showMoreButtonList.get(0).getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     public void onDestroy() {
