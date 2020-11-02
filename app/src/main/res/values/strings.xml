@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">QQ自动点赞</string>
     <string name="description">该服务用以保证QQ自动点赞应用的正常运行，关闭后将无法执行QQ自动点赞操作。</string>
+    <string name="Tutorial_title">教程</string>
+    <string name="Tutorial_view1">一、基本操作</string>
+    <string name="Tutorial_view2">Step1:\n　　打开系统设置→辅助功能(无障碍)菜单，将“QQ自动点赞”的辅助服务开关打开\n(也可直接点击应用主界面上的“进入辅助功能/无障碍设置界面”按钮进入)</string>
+    <string name="Tutorial_view3">(进入辅助功能/无障碍设置界面)</string>
+    <string name="Tutorial_view4">(打开“QQ自动点赞”的辅助服务)</string>
+    <string name="Tutorial_view5">Step2:\n　　进入QQ，打开个人面板中的点赞窗口</string>
+    <string name="Tutorial_view6">Step3:\n　　下拉状态栏，单击开始按钮</string>
+    <string name="Tutorial_view7">Step4:\n　　收起状态栏，即可自动点赞\n（若收起状态栏后未开始自动点赞，请尝试返回至个人面板，再进入点赞窗口）</string>
+    <string name="Tutorial_view8">提示:\n“谁赞过我”和“我赞过谁”均支持\n\n如果需要点赞的用户过多，建议将屏幕关闭时间设长一些\n\n如果发现过程中屏幕没有动静请下拉通知栏，点击停止按钮后过几秒再点击开始按钮。若仍无法正常点赞请重启手机后重复以上全部过程，若还是无法正常点赞请联系作者\n\n</string>
+    <string name="Tutorial_view9"><![CDATA[项目链接：https://github.com/wh201906/AutoZan\n求star求issue>_<]]></string>
+    <string name="Notification_start">开始</string>
+    <string name="Notification_title">QQ自动点赞</string>
+    <string name="Main_title">QQ自动点赞</string>
+    <string name="Main_checkTutorial">查看教程</string>
+    <string name="Main_acc">进入辅助功能/无障碍设置界面</string>
+    <string name="Main_lock">设为永不锁屏/恢复锁屏时间</string>
+    <string name="Main_contact">联系作者</string>
+    <string name="Main_seeLog">查看日志</string>
+    <string name="Main_qq">打开QQ</string>
+    <string name="Main_interval">单次点赞间隔:\n</string>
 </resources>

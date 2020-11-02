@@ -9,9 +9,9 @@ android {
         }
         applicationId "priv.wh201906.autozan"
         minSdkVersion 18
-        targetSdkVersion 21
-        versionCode 110
-        versionName "1.1.0"
+        targetSdkVersion 26
+        versionCode 111
+        versionName '0.0.1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

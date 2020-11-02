@@ -14,7 +14,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:text="开始"
+        android:text="@string/Notification_start"
         android:visibility="visible" />
 
     <ImageView
@@ -36,10 +36,10 @@
         <TextView
             android:id="@+id/Notfication_TittleView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1.0"
             android:gravity="center"
-            android:text="QQ自动点赞"
+            android:text="@string/Notification_title"
             android:textSize="20sp"
             android:textStyle="bold" />
 

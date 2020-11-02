@@ -147,7 +147,7 @@ public class MainActivity extends Activity {
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                delayView.setText("单次点赞间隔:\n"+String.valueOf((progress*50+100)/1000f)+"秒");
+                delayView.setText(getString(R.string.Main_interval)+String.valueOf((progress*50+100)/1000f)+"秒");
                 app.setDelayTime(progress*50+100);
                 settings.edit().putInt("DelayTime",progress*50+100).commit();
             }
@@ -164,7 +164,7 @@ public class MainActivity extends Activity {
         });
 
         seekbar.setProgress((settings.getInt("DelayTime",200)-100)/50);
-        delayView.setText("单次点赞间隔:\n"+String.valueOf((seekbar.getProgress()*50+100)/1000f)+"秒");
+        delayView.setText(getString(R.string.Main_interval)+String.valueOf((seekbar.getProgress()*50+100)/1000f)+"秒");
         app.setDelayTime(seekbar.getProgress()*50+100);
 
         CheckBox checkbox=(CheckBox)findViewById(R.id.Main_LogCheckBox);

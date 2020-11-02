@@ -6,7 +6,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <TextView
@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="教程"
+                android:text="@string/Tutorial_title"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -27,7 +27,7 @@
                 android:id="@+id/Tutorial_StepsView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="一、基本操作" />
+                android:text="@string/Tutorial_view1" />
 
             <TextView
                 android:id="@+id/Tutorial_StepsView2"
@@ -36,7 +36,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:text="Step1:\n\u3000\u3000打开系统设置→辅助功能(无障碍)菜单，将“QQ自动点赞”的辅助服务开关打开\n(也可直接点击应用主界面上的“进入辅助功能/无障碍设置界面”按钮进入)" />
+                android:text="@string/Tutorial_view2" />
 
             <ImageView
                 android:id="@+id/Tutorial_StepsIView1"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
-                android:text="(进入辅助功能/无障碍设置界面)" />
+                android:text="@string/Tutorial_view3" />
 
             <ImageView
                 android:id="@+id/Tutorial_StepsIView2"
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
-                android:text="(打开“QQ自动点赞”的辅助服务)" />
+                android:text="@string/Tutorial_view4" />
 
             <TextView
                 android:id="@+id/Tutorial_StepsView5"
@@ -83,7 +83,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:text="Step2:\n\u3000\u3000进入QQ，打开个人面板中的点赞窗口" />
+                android:text="@string/Tutorial_view5" />
 
             <ImageView
                 android:id="@+id/Tutorial_StepsIView3"
@@ -103,7 +103,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:text="Step3:\n\u3000\u3000下拉状态栏，单击开始按钮" />
+                android:text="@string/Tutorial_view6" />
 
             <ImageView
                 android:id="@+id/Tutorial_StepsIView4"
@@ -123,7 +123,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
-                android:text="Step4:\n\u3000\u3000收起状态栏，即可自动点赞\n（若收起状态栏后未开始自动点赞，请尝试返回至个人面板，再进入点赞窗口）" />
+                android:text="@string/Tutorial_view7" />
 
             <ImageView
                 android:id="@+id/Tutorial_StepsIView5"
@@ -144,18 +144,19 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:gravity="center_horizontal"
-                android:text="提示:\n“谁赞过我”和“我赞过谁”均支持\n\n如果需要点赞的用户过多，建议将屏幕关闭时间设长一些\n\n如果发现过程中屏幕没有动静请下拉通知栏，点击停止按钮后过几秒再点击开始按钮。若仍无法正常点赞请重启手机后重复以上全部过程，若还是无法正常点赞请联系作者\n\n"
+                android:text="@string/Tutorial_view8"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/Tutorial_StepsView10"
+                android:id="@+id/Tutorial_StepsView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
+                android:autoLink="web"
                 android:gravity="center_horizontal"
-                android:text="项目链接：https://github.com/wh201906/AutoZan\n求star求issue>_<"
+                android:text="@string/Tutorial_view9"
                 android:textSize="18sp" />
 
         </LinearLayout>

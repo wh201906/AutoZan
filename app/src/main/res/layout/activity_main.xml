@@ -19,23 +19,23 @@
             android:layout_height="80dp">
 
             <ImageView
-                android:id="@+id/Splash_Logo"
+                android:id="@+id/Main_Logo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignStart="@+id/Splash_Text"
+                android:layout_alignStart="@+id/Main_Title"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
-                android:id="@+id/Splash_Text"
+                android:id="@+id/Main_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/Splash_Logo"
-                android:layout_alignBottom="@+id/Splash_Logo"
+                android:layout_alignTop="@+id/Main_Logo"
+                android:layout_alignBottom="@+id/Main_Logo"
                 android:layout_centerHorizontal="true"
                 android:gravity="center_vertical"
-                android:paddingLeft="55dp"
-                android:text="QQ自动点赞"
+                android:paddingStart="55dp"
+                android:text="@string/Main_title"
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="查看教程" />
+            android:text="@string/Main_checkTutorial" />
 
         <Button
             android:id="@+id/Main_AccButton"
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="进入辅助功能/无障碍设置界面" />
+            android:text="@string/Main_acc" />
 
         <Button
             android:id="@+id/Main_LockButton"
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="设为永不锁屏/恢复锁屏时间" />
+            android:text="@string/Main_lock" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="2dp"
                 android:gravity="center"
-                android:text="单次点赞间隔:\n0.2秒" />
+                android:text="@string/Main_interval" />
 
             <SeekBar
                 android:id="@+id/Main_ZanSeekBar"
@@ -96,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="打开QQ" />
+            android:text="@string/Main_qq" />
 
         <Button
             android:id="@+id/Main_ContactButton"
@@ -104,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="联系作者" />
+            android:text="@string/Main_contact" />
 
         <CheckBox
             android:id="@+id/Main_LogCheckBox"
@@ -114,7 +114,7 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:checked="true"
-            android:text="查看日志" />
+            android:text="@string/Main_seeLog" />
 
     </LinearLayout>
 

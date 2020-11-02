@@ -1,6 +1,7 @@
 # QQ自动点赞
 一个给别人QQ个人面板自动点赞（获取互赞）的软件  
-基于Android的无障碍服务来模拟点击，无需root  
+基于Android的无障碍服务来模拟点击，无需root
+App内有教程
 [English](../README.md)  
 ![preview](preview.png)  
 
