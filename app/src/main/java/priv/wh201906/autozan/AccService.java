@@ -116,14 +116,16 @@ public class AccService extends AccessibilityService {
 
                     list = event.getText();
                     if (list.size() == 1) {
-                        //Log.v("test",list.get(0).toString());
-                        if (list.get(0).toString().contains("每天最多"))
+                        String text=list.get(0).toString();
+                        if (text.contains("每天最多")||text.contains(("每天只能")))
                             viewState = MyApplication.BUTTON_DONE;
                     }
                     break;
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
 
                     if (runningState != MyApplication.RUNNING_INITIALIZED) {
+                        if(event.getSource()==null)
+                            return;
                         tempNodeInfo1 = event.getSource().findAccessibilityNodeInfosByText("设置");
                         tempNodeInfo2 = event.getSource().findAccessibilityNodeInfosByText("赞了");
                         if (!event.getPackageName().toString().equals("com.tencent.mobileqq")
@@ -134,6 +136,7 @@ public class AccService extends AccessibilityService {
                             //tempNodeInfo1=null;
                             //tempNodeInfo2=null;
                             list = event.getText();
+                            Log.i("event.getText()",String.valueOf(list.size()));
                             if (list.size() == 1) {
                                 if (list.get(0).toString().contains("每天最多")) {
                                     viewState = MyApplication.BUTTON_DONE;
@@ -145,9 +148,16 @@ public class AccService extends AccessibilityService {
                                 }
                             } else if (list.size() == 5) {
                                 if (list.get(0).toString().contains("提醒") && list.get(1).toString().contains("今日免费")) {
-                                    getRootInActiveWindow()
-                                            .findAccessibilityNodeInfosByText("取消").get(0).
-                                            performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                                    List<AccessibilityNodeInfo> cancelButtons=getRootInActiveWindow().findAccessibilityNodeInfosByText("取消");
+                                    while(!cancelButtons.isEmpty()) {
+                                        cancelButtons.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                                        try {
+                                            Thread.sleep(100);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        cancelButtons = getRootInActiveWindow().findAccessibilityNodeInfosByText("取消");
+                                    }
                                     viewState = MyApplication.BUTTON_DONE;
                                 } else {
                                     //Log.v("info","窗口已改变");

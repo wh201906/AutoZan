@@ -85,7 +85,7 @@
                 android:id="@+id/Main_ZanSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:max="38"
+                android:max="48"
                 android:progress="2" />
 
         </LinearLayout>
