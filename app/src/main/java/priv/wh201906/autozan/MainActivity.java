@@ -140,9 +140,9 @@ public class MainActivity extends Activity
                             @Override
                             public void onClick(DialogInterface dialog, int which)
                             {
-                                if(which==0)
+                                if (which == 0)
                                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/wh201906")));
-                                else if(which==1)
+                                else if (which == 1)
                                 {
                                     ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                                     if (cm != null)
@@ -207,7 +207,13 @@ public class MainActivity extends Activity
                 else
                 {
                     logView.setVisibility(View.INVISIBLE);
-                    unregisterReceiver(ActivityReceiver);
+                    try
+                    {
+                        unregisterReceiver(ActivityReceiver);
+                    } catch (IllegalArgumentException e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
