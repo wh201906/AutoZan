@@ -13,25 +13,33 @@ import android.os.Build;
 import android.os.IBinder;
 import android.widget.RemoteViews;
 
-public class MainService extends Service {
+public class MainService extends Service
+{
 
     NotificationManager NManager;
     MyApplication app;
     BroadcastReceiver MServiceReceiver;
 
     @Override
-    public void onCreate() {
+    public void onCreate()
+    {
         super.onCreate();
         NManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         app = (MyApplication) getApplication();
-        MServiceReceiver = new BroadcastReceiver() {
+        MServiceReceiver = new BroadcastReceiver()
+        {
             @Override
-            public void onReceive(Context context, Intent intent) {
-                if ((intent.getAction() != null) && intent.getAction().equals(MyApplication.NOTFICATION_CHANGE)) {
-                    if (!app.getRunning()) {
+            public void onReceive(Context context, Intent intent)
+            {
+                if ((intent.getAction() != null) && intent.getAction().equals(MyApplication.NOTFICATION_CHANGE))
+                {
+                    if (!app.getRunning())
+                    {
                         app.setRunning(true);
                         Start();
-                    } else {
+                    }
+                    else
+                    {
                         app.setRunning(false);
                         Stop();
                     }
@@ -41,7 +49,8 @@ public class MainService extends Service {
         };
         IntentFilter filter = new IntentFilter(MyApplication.NOTFICATION_CHANGE);
         registerReceiver(MServiceReceiver, filter);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
             NotificationChannel channel = new NotificationChannel(getPackageName(), "AutoZan", NotificationManager.IMPORTANCE_DEFAULT);
             NManager.createNotificationChannel(channel);
         }
@@ -49,24 +58,28 @@ public class MainService extends Service {
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
+    public IBinder onBind(Intent intent)
+    {
 
         return null;
     }
 
-    void Start() {
+    void Start()
+    {
         Intent intent = new Intent(MyApplication.ACCSERVICE_CHANGE);
         intent.putExtra("isRunning", MyApplication.ACCSERVICE_ENABLED);
         sendBroadcast(intent);
     }
 
-    void Stop() {
+    void Stop()
+    {
         Intent intent = new Intent(MyApplication.ACCSERVICE_CHANGE);
         intent.putExtra("isRunning", MyApplication.ACCSERVICE_DISABLED);
         sendBroadcast(intent);
     }
 
-    void setNotification() {
+    void setNotification()
+    {
         RemoteViews remoteview = new RemoteViews(getPackageName(), R.layout.notification);
         Intent intent;
         PendingIntent pendingintent;
@@ -97,7 +110,8 @@ public class MainService extends Service {
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy()
+    {
         unregisterReceiver(MServiceReceiver);
         super.onDestroy();
     }
