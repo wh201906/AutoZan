@@ -62,9 +62,10 @@ public class AccService extends AccessibilityService
                 }
 
                 scrollDown(accNodeInfo);
-
-                noMoreButtonList = accNodeInfo.findAccessibilityNodeInfosByText("暂无更多");
-
+                if (isWindowCorrect(accNodeInfo))
+                    noMoreButtonList = accNodeInfo.findAccessibilityNodeInfosByText("暂无更多");
+                else
+                    noMoreButtonList = null;
             } while (noMoreButtonList == null || noMoreButtonList.isEmpty());
 
             app.LogPrintLine("点赞完成，共计为" + app.getCounter() + "人点赞");
@@ -302,6 +303,8 @@ public class AccService extends AccessibilityService
 
     private void scrollDown(AccessibilityNodeInfo parentNode)
     {
+        if (!isWindowCorrect(parentNode))
+            return;
         for (int i = 0; i < parentNode.getChildCount(); i++)
         {
             AccessibilityNodeInfo info = parentNode.getChild(i);
@@ -317,7 +320,8 @@ public class AccService extends AccessibilityService
 
     private boolean clickShowMoreButton(AccessibilityNodeInfo parentNode)
     {
-
+        if (!isWindowCorrect(parentNode))
+            return false;
         List<AccessibilityNodeInfo> showMoreButtonList = accNodeInfo.findAccessibilityNodeInfosByText("显示更多");
         if (showMoreButtonList != null && !showMoreButtonList.isEmpty())
         {
