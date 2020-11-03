@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import androidx.annotation.Nullable;
-
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
@@ -41,7 +39,7 @@ public class AccService extends AccessibilityService
             app.initCounter();
             do
             {
-                if (!isCorrectWindow())
+                if (!isRunning())
                 {
                     return;
                 }
@@ -120,73 +118,41 @@ public class AccService extends AccessibilityService
     {
         if (runningState != MyApplication.RUNNING_INITIALIZED)
         {
-            List<AccessibilityNodeInfo> tempNodeInfo1;
-            List<AccessibilityNodeInfo> tempNodeInfo2;
             List<CharSequence> textList;
 
             int eventType = event.getEventType();
             if (eventType == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED)
             {
                 textList = event.getText();
-                if (textList.size() == 1)
-                {
-                    String text = textList.get(0).toString();
-                    if (text.contains("每天最多") || text.contains(("每天只能")))
-                        viewState = MyApplication.BUTTON_DONE;
-                }
+                if (isButtonDone(textList))
+                    viewState = MyApplication.BUTTON_DONE;
             }
             else if (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED)
             {
                 if (event.getSource() == null)
                     return;
-                tempNodeInfo1 = event.getSource().findAccessibilityNodeInfosByText("设置");
-                tempNodeInfo2 = event.getSource().findAccessibilityNodeInfosByText("赞了");
-                if (!event.getPackageName().toString().equals("com.tencent.mobileqq")
-                        || tempNodeInfo1.isEmpty()
-                        || tempNodeInfo1.size() == 0
-                        || tempNodeInfo2.isEmpty()
-                        || tempNodeInfo2.size() == 0)
+                if (!isWindowCorrect(event.getSource()))
                 {
-                    //tempNodeInfo1=null;
-                    //tempNodeInfo2=null;
                     textList = event.getText();
                     Log.i("event.getText()", String.valueOf(textList.size()));
-                    if (textList.size() == 1)
+                    if (isButtonDone(textList))
                     {
-                        if (textList.get(0).toString().contains("每天最多"))
-                        {
-                            viewState = MyApplication.BUTTON_DONE;
-                        }
-                        else
-                        {
-                            isWindowChanged = true;
-                        }
+                        viewState = MyApplication.BUTTON_DONE;
                     }
-                    else if (textList.size() == 5)
+                    else if (textList.size() == 5 && textList.get(0).toString().contains("提醒") && textList.get(1).toString().contains("今日免费"))
                     {
-                        if (textList.get(0).toString().contains("提醒") && textList.get(1).toString().contains("今日免费"))
+                        List<AccessibilityNodeInfo> cancelButtons = getRootInActiveWindow().findAccessibilityNodeInfosByText("取消");
+                        while (!cancelButtons.isEmpty())
                         {
-                            List<AccessibilityNodeInfo> cancelButtons = getRootInActiveWindow().findAccessibilityNodeInfosByText("取消");
-                            while (!cancelButtons.isEmpty())
-                            {
-                                cancelButtons.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                                SystemClock.sleep(100);
-                                cancelButtons = getRootInActiveWindow().findAccessibilityNodeInfosByText("取消");
-                            }
-                            viewState = MyApplication.BUTTON_DONE;
+                            cancelButtons.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                            SystemClock.sleep(100);
+                            cancelButtons = getRootInActiveWindow().findAccessibilityNodeInfosByText("取消");
                         }
-                        else
-                        {
-                            //Log.v("info","窗口已改变");
-                            isWindowChanged = true;
-                        }
+                        viewState = MyApplication.BUTTON_DONE;
 
                     }
                     else
-                    {
-                        //Log.v("info","窗口已改变");
                         isWindowChanged = true;
-                    }
                 }
 
             }
@@ -208,14 +174,6 @@ public class AccService extends AccessibilityService
         {
             Log.i("event", "usual");
         }
-        else
-        {
-
-            AccessibilityNodeInfo temp1 = getRootInActiveWindow();
-            if (temp1 == null)
-                return;
-
-        }
     }
 
     @Override
@@ -231,7 +189,18 @@ public class AccService extends AccessibilityService
         return super.onUnbind(intent);
     }
 
-    @Nullable
+    private boolean isButtonDone(List<CharSequence> textList)
+    {
+        if (textList == null)
+            return false;
+        if (textList.size() == 1)
+        {
+            String text = textList.get(0).toString();
+            return (text.contains("每天最多") || text.contains("每天只能"));
+        }
+        return false;
+    }
+
     private AccessibilityNodeInfo WaitCorrectWindow()
     {
         List<AccessibilityNodeInfo> targetNode1, targetNode2;
@@ -243,19 +212,31 @@ public class AccService extends AccessibilityService
         {
             SystemClock.sleep(1000);
             rootWindow = getRootInActiveWindow();
-            targetNode1 = rootWindow.findAccessibilityNodeInfosByText("设置");
-            targetNode2 = rootWindow.findAccessibilityNodeInfosByText("赞了");
-            isCorrect = rootWindow.getPackageName().toString().equals("com.tencent.mobileqq")
-                    && targetNode1 != null
-                    && !targetNode1.isEmpty()
-                    && targetNode2 != null
-                    && !targetNode2.isEmpty();
-        } while (!isCorrect);
+        } while (!isWindowCorrect(rootWindow));
         isWindowChanged = false;
         return rootWindow;
     }
 
-    private boolean isCorrectWindow()
+    private boolean isWindowCorrect(AccessibilityNodeInfo rootWindow)
+    {
+        List<AccessibilityNodeInfo> targetNode1, targetNode2;
+        boolean isCorrect;
+
+        if (rootWindow == null)
+            rootWindow = getRootInActiveWindow();
+        targetNode1 = rootWindow.findAccessibilityNodeInfosByText("设置");
+        targetNode2 = rootWindow.findAccessibilityNodeInfosByText("赞了");
+        isCorrect = rootWindow.getPackageName().toString().equals("com.tencent.mobileqq")
+                && targetNode1 != null
+                && !targetNode1.isEmpty()
+                && targetNode2 != null
+                && !targetNode2.isEmpty();
+        return isCorrect;
+    }
+
+    private boolean isWindowCorrect() {return isWindowCorrect(null);}
+
+    private boolean isRunning()
     {
         if (runningState != MyApplication.RUNNING_STOPPING && !isWindowChanged)
         {
@@ -307,16 +288,12 @@ public class AccService extends AccessibilityService
             viewState = MyApplication.BUTTON_HALF; //设置当前“赞”状态为未完成
             for (int j = 1; j <= 25; j++)
             { //循环点击单个按钮
-                if (!isCorrectWindow())
-                {
+                if (!isRunning())
                     return;
-                }
                 button.performAction(AccessibilityNodeInfo.ACTION_CLICK);
                 SystemClock.sleep(app.getDelayTime());
                 if (viewState == MyApplication.BUTTON_DONE)
-                {
                     break;
-                }
             }
             app.changeCounter();
             SystemClock.sleep(app.getDelayTime() + 200);
@@ -330,10 +307,8 @@ public class AccService extends AccessibilityService
             AccessibilityNodeInfo info = parentNode.getChild(i);
             if (info.getClassName().toString().equals("android.widget.AbsListView"))
             {
-                if (!isCorrectWindow())
-                {
+                if (!isRunning())
                     return;
-                }
                 info.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
                 break;
             }
@@ -351,7 +326,6 @@ public class AccService extends AccessibilityService
         }
         return false;
     }
-
 
     @Override
     public void onDestroy()

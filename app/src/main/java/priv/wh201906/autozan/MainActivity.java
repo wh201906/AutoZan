@@ -64,23 +64,14 @@ public class MainActivity extends Activity
             {
                 if (intent.getAction() == null)
                     return;
-                else if (intent.getAction().equals(MyApplication.LOGOUT_PRINTLINE))
-                {
+                if (intent.getAction().equals(MyApplication.LOGOUT_PRINTLINE))
                     logView.append(intent.getStringExtra(MyApplication.LOGOUT_PRINTLINE));
-                    int offset = logView.getLineCount() * logView.getLineHeight();
-                    if (offset > logView.getHeight())
-                    {
-                        logView.scrollTo(0, offset - logView.getHeight());
-                    }
-                }
                 else if (intent.getAction().equals(MyApplication.LOGOUT_RELOAD))
-                {
                     logView.setText(intent.getStringExtra(MyApplication.LOGOUT_RELOAD));
-                    int offset = logView.getLineCount() * logView.getLineHeight();
-                    if (offset > logView.getHeight())
-                    {
-                        logView.scrollTo(0, offset - logView.getHeight());
-                    }
+                int offset = logView.getLineCount() * logView.getLineHeight();
+                if (offset > logView.getHeight())
+                {
+                    logView.scrollTo(0, offset - logView.getHeight());
                 }
             }
         };
@@ -149,23 +140,20 @@ public class MainActivity extends Activity
                             @Override
                             public void onClick(DialogInterface dialog, int which)
                             {
-                                switch (which)
+                                if(which==0)
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/wh201906")));
+                                else if(which==1)
                                 {
-                                    case 0:
-                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/wh201906")));
-                                        break;
-                                    case 1:
-                                        ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                                        if (cm != null)
-                                        {
-                                            cm.setPrimaryClip(ClipData.newPlainText("Email", "wh201906@yandex.com"));
-                                            Toast.makeText(MainActivity.this, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else
-                                        {
-                                            Toast.makeText(MainActivity.this, "复制到剪贴板失败", Toast.LENGTH_SHORT).show();
-                                        }
-                                        break;
+                                    ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                                    if (cm != null)
+                                    {
+                                        cm.setPrimaryClip(ClipData.newPlainText("Email", "wh201906@yandex.com"));
+                                        Toast.makeText(MainActivity.this, "已复制到剪贴板", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(MainActivity.this, "复制到剪贴板失败", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                         })
